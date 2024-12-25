@@ -2,9 +2,10 @@
 
 #include <stdint.h>
 #include <string>
+#include <string_view>
 #include <vector>
 
-typedef enum : uint32_t {
+typedef enum {
     // keywords
     INT,
     MAIN,
@@ -18,17 +19,22 @@ typedef enum : uint32_t {
     LCURLYBRACKET,
     RCURLYBRACKET,
     SEMICOLON,
+    ERROR,
 } TokenType;
 
 struct Token {
     TokenType type;
-    uint32_t i;
+
+    union {
+        uint64_t integer_value;
+        float f32_value;
+        double f64_value;
+        std::string_view name;
+    };
 };
 
 struct Lexer {
     std::vector<char> file_buf;
-    std::vector<int> constant_buf = std::vector<int>();
-    std::vector<std::string> identifier_buf = std::vector<std::string>();
     std::vector<Token> token_buf = std::vector<Token>();
 
     uint32_t cursor = 0;
@@ -41,12 +47,10 @@ struct Lexer {
     char peek();
     char peek_next();
     char advance();
-    void add_token(TokenType type);
-    void add_token_i(TokenType type, std::string word);
-    void add_token_k(TokenType type, uint32_t i);
-    void add_token_c(TokenType type, uint32_t i);
     void number();
     void word();
     void scan_token();
     bool at_end();
 };
+
+void print_tokens(std::vector<Token> &token_buf);

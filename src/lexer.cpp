@@ -28,33 +28,6 @@ char Lexer::peek_next() {
 
 char Lexer::advance() { return file_buf[cursor++]; }
 
-void Lexer::add_token(TokenType type) {
-    Token token = {.type = type, .i = 0};
-    token_buf.push_back(token);
-}
-
-void Lexer::add_token_i(TokenType type, std::string word) {
-    Token token = {.type = type,
-                     .i = static_cast<uint32_t>(identifier_buf.size() - 1)};
-
-    identifier_buf.push_back(word);
-    token_buf.push_back(token);
-}
-
-void Lexer::add_token_k(TokenType type, uint32_t i) {
-    Token token = {.type = type, .i = i};
-
-    token_buf.push_back(token);
-}
-
-void Lexer::add_token_c(TokenType type, uint32_t i) {
-    Token token = {.type = type,
-                     .i = static_cast<uint32_t>(constant_buf.size() - 1)};
-
-    constant_buf.push_back(i);
-    token_buf.push_back(token);
-}
-
 void Lexer::number() {
     while (isdigit(peek())) {
         advance();
@@ -74,8 +47,8 @@ void Lexer::number() {
     if (is_float) {
         printf("floats not supported yet\n");
     } else {
-        int i = std::stoi(num);
-        add_token_c(CONSTANT, i);
+        uint64_t i = std::stoul(num);
+        token_buf.push_back({.type = TokenType::CONSTANT, .integer_value = i});
     }
 }
 
@@ -84,25 +57,17 @@ void Lexer::word() {
         advance();
     }
 
-    /*if (isgraph(peek())) {
-        advance();
-
-        while (isgraph(peek())) {
-            advance();
-        }
-    }*/
-
     std::string word(file_buf.begin() + cursor_start,
                      file_buf.begin() + cursor);
 
     for (uint32_t i = 0; i < std::size(keyword_buf); i++) {
         if (word == keyword_buf[i]) {
-            add_token(static_cast<TokenType>(i));
+            token_buf.push_back({.type = static_cast<TokenType>(i)});
             return;
         }
     }
 
-    add_token_i(IDENTIFIER, std::move(word.data()));
+    token_buf.push_back({.type = IDENTIFIER, .name = word});
 }
 
 void Lexer::scan_token() {
@@ -117,19 +82,19 @@ void Lexer::scan_token() {
         cursor_prev_line = cursor;
         break;
     case '(':
-        add_token(LPAREN);
+        token_buf.push_back({.type = LPAREN});
         break;
     case ')':
-        add_token(RPAREN);
+        token_buf.push_back({.type = RPAREN});
         break;
     case '{':
-        add_token(LCURLYBRACKET);
+        token_buf.push_back({.type = LCURLYBRACKET});
         break;
     case '}':
-        add_token(RCURLYBRACKET);
+        token_buf.push_back({.type = RCURLYBRACKET});
         break;
     case ';':
-        add_token(SEMICOLON);
+        token_buf.push_back({.type = SEMICOLON});
         break;
     case '0' ... '9':
         number();
@@ -148,15 +113,21 @@ void Lexer::scan_token() {
 
 bool Lexer::at_end() { return cursor >= file_buf.size(); }
 
-void print_tokens(Lexer &l) {
-    for (uint32_t i = 0; i < l.token_buf.size(); i++) {
-        switch (l.token_buf[i].type) {
+void Lexer::translate() {
+    while (!at_end()) {
+        cursor_start = cursor;
+        scan_token();
+    }
+}
+
+void print_tokens(std::vector<Token> &token_buf) {
+    for (uint32_t i = 0; i < token_buf.size(); i++) {
+        switch (token_buf[i].type) {
         case CONSTANT:
             printf("CONSTANT");
             break;
         case IDENTIFIER:
             printf("IDENTIFIER(");
-            printf("%s", l.identifier_buf[l.token_buf[i].i].c_str());
             printf(")");
             break;
         case LPAREN:
@@ -186,17 +157,12 @@ void print_tokens(Lexer &l) {
         case VOID:
             printf("VOID");
             break;
+        case ERROR:
+            printf("ERROR");
+            break;
         }
 
         printf("\n");
     }
 }
 
-void Lexer::translate() {
-    while (!at_end()) {
-        cursor_start = cursor;
-        scan_token();
-    }
-
-    print_tokens(*this);
-}

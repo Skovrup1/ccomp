@@ -25,11 +25,11 @@ target_compile_options(${PROJECT_NAME} PUBLIC
     -Wtype-limits
     -Wformat-nonliteral
     -Wmissing-declarations
-    -fsanitize=address
+    #    -fsanitize=address
     -fno-omit-frame-pointer
     -pipe
     #-mavx2
     #-O3
 )
 
-target_link_options(${PROJECT_NAME} PRIVATE -fsanitize=address)
+#target_link_options(${PROJECT_NAME} PRIVATE -fsanitize=address)

@@ -28,5 +28,7 @@ int main() {
     Lexer lex{.file_buf = buf};
     lex.translate();
 
+    print_tokens(lex.token_buf);
+
     return 0;
 }
