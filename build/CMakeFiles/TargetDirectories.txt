@@ -1,3 +1,0 @@
-/home/foo/dev/c-compiler/ccomp/build/CMakeFiles/ccomp.dir
-/home/foo/dev/c-compiler/ccomp/build/CMakeFiles/edit_cache.dir
-/home/foo/dev/c-compiler/ccomp/build/CMakeFiles/rebuild_cache.dir
