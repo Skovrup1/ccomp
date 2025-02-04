@@ -1,0 +1,26 @@
+[
+{
+  "directory": "/home/foo/dev/c-compiler/ccomp/build",
+  "command": "/usr/lib/ccache/bin/cc -I/home/foo/dev/c-compiler/ccomp/include -g -fdiagnostics-color=always -Wall -Wextra -Wwrite-strings -Wstrict-prototypes -Wformat-nonliteral -Wmissing-declarations -fno-common -fsanitize=address -fno-omit-frame-pointer -pipe -march=native -O0 -g -o CMakeFiles/ccomp.dir/src/alloc.c.o -c /home/foo/dev/c-compiler/ccomp/src/alloc.c",
+  "file": "/home/foo/dev/c-compiler/ccomp/src/alloc.c",
+  "output": "CMakeFiles/ccomp.dir/src/alloc.c.o"
+},
+{
+  "directory": "/home/foo/dev/c-compiler/ccomp/build",
+  "command": "/usr/lib/ccache/bin/cc -I/home/foo/dev/c-compiler/ccomp/include -g -fdiagnostics-color=always -Wall -Wextra -Wwrite-strings -Wstrict-prototypes -Wformat-nonliteral -Wmissing-declarations -fno-common -fsanitize=address -fno-omit-frame-pointer -pipe -march=native -O0 -g -o CMakeFiles/ccomp.dir/src/lexer.c.o -c /home/foo/dev/c-compiler/ccomp/src/lexer.c",
+  "file": "/home/foo/dev/c-compiler/ccomp/src/lexer.c",
+  "output": "CMakeFiles/ccomp.dir/src/lexer.c.o"
+},
+{
+  "directory": "/home/foo/dev/c-compiler/ccomp/build",
+  "command": "/usr/lib/ccache/bin/cc -I/home/foo/dev/c-compiler/ccomp/include -g -fdiagnostics-color=always -Wall -Wextra -Wwrite-strings -Wstrict-prototypes -Wformat-nonliteral -Wmissing-declarations -fno-common -fsanitize=address -fno-omit-frame-pointer -pipe -march=native -O0 -g -o CMakeFiles/ccomp.dir/src/main.c.o -c /home/foo/dev/c-compiler/ccomp/src/main.c",
+  "file": "/home/foo/dev/c-compiler/ccomp/src/main.c",
+  "output": "CMakeFiles/ccomp.dir/src/main.c.o"
+},
+{
+  "directory": "/home/foo/dev/c-compiler/ccomp/build",
+  "command": "/usr/lib/ccache/bin/cc -I/home/foo/dev/c-compiler/ccomp/include -g -fdiagnostics-color=always -Wall -Wextra -Wwrite-strings -Wstrict-prototypes -Wformat-nonliteral -Wmissing-declarations -fno-common -fsanitize=address -fno-omit-frame-pointer -pipe -march=native -O0 -g -o CMakeFiles/ccomp.dir/src/string.c.o -c /home/foo/dev/c-compiler/ccomp/src/string.c",
+  "file": "/home/foo/dev/c-compiler/ccomp/src/string.c",
+  "output": "CMakeFiles/ccomp.dir/src/string.c.o"
+}
+]
