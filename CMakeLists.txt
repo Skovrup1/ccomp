@@ -2,35 +2,28 @@ cmake_minimum_required(VERSION 3.20)
 
 project(ccomp VERSION 0.0.0 LANGUAGES C)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_C_STANDARD 23)
 
 set(LIBRARY_OUTPUT_PATH "${CMAKE_BINARY_DIR}")
 set(EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}")
 
-file(GLOB_RECURSE HEADERS "include/*.h")
+file(GLOB_RECURSE HEADERS "src/*.h")
 file(GLOB_RECURSE SOURCES "src/*.c")
 
-add_executable(${PROJECT_NAME} ${SOURCES})
-
-target_include_directories(${PROJECT_NAME} PUBLIC
-    "${CMAKE_CURRENT_SOURCE_DIR}/include"
-)
-
-target_compile_options(${PROJECT_NAME} PUBLIC
+add_compile_options(
+    -fno-omit-frame-pointer
+    -fsanitize=address
+    -g
+    -O0
     -Wall
     -Wextra
-    -Wwrite-strings
-    -Wstrict-prototypes
-    -Wformat-nonliteral
-    -Wmissing-declarations
-    -fno-common
-    -fsanitize=address
-    -fno-omit-frame-pointer
-    #
-    -pipe
-    -march=native
-    -O0
-    -g
+    -Wno-deprecated
+    #-fopt-info
 )
 
-target_link_options(${PROJECT_NAME} PRIVATE -fsanitize=address)
+add_link_options(
+    -fsanitize=address
+)
+
+add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+
