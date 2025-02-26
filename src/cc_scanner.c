@@ -12,7 +12,7 @@ typedef struct {
 
 Scanner scanner;
 
-static void init_scanner(char const *source) {
+void init_scanner(char const *source) {
     scanner.start = source;
     scanner.current = source;
     scanner.line = 1;
@@ -126,7 +126,7 @@ static void skip_whitespace() {
     }
 }
 
-static Token get_token() {
+Token next_token() {
     skip_whitespace();
 
     scanner.start = scanner.current;
@@ -161,21 +161,23 @@ static Token get_token() {
     return error_token("unexpected character");
 }
 
-void lexical_scan(char const *source) {
+void print_all_tokens(char const *source) {
     init_scanner(source);
 
-    Token t = get_token();
+    Token t = next_token();
     while (t.type != TOKEN_EOF) {
         char const *type_str = token_type_to_string(t.type);
-        fprintf(stderr, "%s", type_str);
+        printf("%s", type_str);
 
         if (t.type == TOKEN_IDENTIFIER)
-            fprintf(stderr, "(%.*s)", (int)t.length, t.start);
+            printf("(%.*s)", (int)t.length, t.start);
 
-        fprintf(stderr, "\n");
+        printf("\n");
 
-        t = get_token();
+        t = next_token();
     }
+
+    printf("\n");
 }
 
 const char *token_type_to_string(TokenType type) {

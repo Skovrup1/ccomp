@@ -1,9 +1,15 @@
 #include "cc_common.h"
 #include "cc_scanner.h"
+#include "cc_parser.h"
+#include "cc_ast.h"
+#include "cc_asm.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
+/*
+ * @return caller owned buffer
+ */
 static char *open_file(char const *path) {
     FILE *file = fopen(path, "rb");
     if (file == NULL) {
@@ -33,13 +39,32 @@ static char *open_file(char const *path) {
 }
 
 i32 main(i32 argc, char *argv[]) {
+    char *source;
+
     if (argc == 2) {
-        char *buffer = open_file(argv[1]);
-        lexical_scan(buffer);
+        source = open_file(argv[1]);
     } else {
         fprintf(stderr, "invalid arguments\n");
         return 1;
     }
+
+    print_all_tokens(source);
+
+    init_scanner(source);
+
+    init_parser();
+
+    AstNode *ast = parse_program();
+
+    print_ast(ast);
+
+    AsmNode *_asm = ast_to_asm(ast);
+
+    if (_asm == NULL) printf("null asm\n");
+
+    print_asm(_asm);
+
+    fflush(stdout);
 
     return 0;
 }

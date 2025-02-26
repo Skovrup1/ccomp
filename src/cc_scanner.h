@@ -32,7 +32,12 @@ typedef struct {
     char const *start;
 } Token;
 
-void lexical_scan(char const *source);
+
+void init_scanner(char const *source);
+Token next_token();
+
+// debug functions
+void print_all_tokens(char const *source);
 
 char const *token_type_to_string(TokenType type);
 
