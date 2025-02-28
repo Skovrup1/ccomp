@@ -19,6 +19,8 @@ typedef enum {
     TOKEN_RBRACE,
     TOKEN_LBRACKET,
     TOKEN_RBRACKET,
+    TOKEN_TILDE,
+    TOKEN_MINUS,
     // keywords
     TOKEN_INT = 256,
     TOKEN_VOID,

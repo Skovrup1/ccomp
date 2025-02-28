@@ -156,6 +156,10 @@ Token next_token() {
         return make_token(TOKEN_RBRACKET);
     case ';':
         return make_token(TOKEN_SEMICOLON);
+    case '~':
+        return make_token(TOKEN_TILDE);
+    case '-':
+        return make_token(TOKEN_MINUS);
     }
 
     return error_token("unexpected character");
@@ -190,13 +194,15 @@ const char *token_type_to_string(TokenType type) {
         case TOKEN_CONSTANT:   return "TOKEN_CONSTANT";
         case TOKEN_IDENTIFIER: return "TOKEN_IDENTIFIER";
         // symbols
-        case TOKEN_SEMICOLON:  return "TOKEN_SEMICOLON";
         case TOKEN_LPAREN:     return "TOKEN_LPAREN";
         case TOKEN_RPAREN:     return "TOKEN_RPAREN";
         case TOKEN_LBRACE:     return "TOKEN_LBRACE";
         case TOKEN_RBRACE:     return "TOKEN_RBRACE";
         case TOKEN_LBRACKET:   return "TOKEN_LBRACKET";
         case TOKEN_RBRACKET:   return "TOKEN_RBRACKET";
+        case TOKEN_TILDE:      return "TOKEN_TILDE";
+        case TOKEN_MINUS:      return "TOKEN_MINUS";
+        case TOKEN_SEMICOLON:  return "TOKEN_SEMICOLON";
         // keywords
         case TOKEN_INT:        return "TOKEN_INT";
         case TOKEN_VOID:       return "TOKEN_VOID";
